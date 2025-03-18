@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Pin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .btn {
+            background: #00aaff;
+            border: none;
+            padding: 15px;
+            margin: 10px;
+            cursor: pointer;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn:hover {
+            background: #0088cc;
+        }
+        .back-btn {
+            background: red;
+        }
+        .back-btn:hover {
+            background: darkred;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            animation: slideUp 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainPage">
+        <h1><i class="fas fa-robot"></i> Welcome to Study Pin</h1>
+        <button class="btn" onclick="showBoardOrTournament()"><i class="fas fa-play"></i> Start</button>
+        <p class="info"><i class="fas fa-book"></i> <strong>Study Pin</strong> ek AI-powered education platform hai jo students ke liye Important Questions aur Practice Sets provide karta hai.</p>
+    </div>
+
+    <div class="container hidden" id="selectionPage">
+        <h2><i class="fas fa-hand-pointer"></i> Choose an Option</h2>
+        <button class="btn" onclick="showBoardSelection()"><i class="fas fa-university"></i> Board</button>
+        <button class="btn" onclick="showTournamentPage()"><i class="fas fa-trophy"></i> Tournament</button>
+        <button class="btn back-btn" onclick="goBack('mainPage')"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+
+    <div class="container hidden" id="boardSelectionPage">
+        <h2><i class="fas fa-university"></i> Select Your Board</h2>
+        <button class="btn" onclick="showClassSelection('CBSE')">CBSE Board</button>
+        <button class="btn" onclick="showClassSelection('Bihar')">Bihar Board</button>
+        <button class="btn" onclick="showClassSelection('UP')">UP Board</button>
+        <button class="btn back-btn" onclick="goBack('selectionPage')"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+
+    <div class="container hidden" id="classSelectionPage">
+        <h2><i class="fas fa-book"></i> Select Your Class</h2>
+        <p id="selectedBoard"></p>
+        <button class="btn" onclick="showStudyOptions('Class 6')">Class 6</button>
+        <button class="btn" onclick="showStudyOptions('Class 7')">Class 7</button>
+        <button class="btn" onclick="showStudyOptions('Class 8')">Class 8</button>
+        <button class="btn" onclick="showStudyOptions('Class 9')">Class 9</button>
+        <button class="btn" onclick="showStudyOptions('Class 10')">Class 10</button>
+        <button class="btn back-btn" onclick="goBack('boardSelectionPage')"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+
+    <div class="container hidden" id="studyOptionsPage">
+        <h2><i class="fas fa-book-open"></i> Study Materials</h2>
+        <p id="selectedClass"></p>
+        <button class="btn"><i class="fas fa-question-circle"></i> Important Questions</button>
+        <button class="btn"><i class="fas fa-file-alt"></i> Practice Set</button>
+        <button class="btn"><i class="fas fa-user-secret"></i> Paper Leak</button>
+        <button class="btn back-btn" onclick="goBack('classSelectionPage')"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+
+    <div class="container hidden" id="tournamentPage">
+        <h2><i class="fas fa-trophy"></i> Tournament Mode</h2>
+        <p>Abhi tournament mode available nahi hai. Jaldi aane wala hai!</p>
+        <button class="btn back-btn" onclick="goBack('selectionPage')"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+
+    <div class="footer">Made by Adarsh Kumar Singh</div>
+
+    <script>
+        function showBoardOrTournament() {
+            togglePages("mainPage", "selectionPage");
+        }
+
+        function showBoardSelection() {
+            togglePages("selectionPage", "boardSelectionPage");
+        }
+
+        function showClassSelection(boardName) {
+            document.getElementById("selectedBoard").innerHTML = "<strong>Selected Board:</strong> " + boardName;
+            togglePages("boardSelectionPage", "classSelectionPage");
+        }
+
+        function showStudyOptions(className) {
+            document.getElementById("selectedClass").innerHTML = "<strong>Selected Class:</strong> " + className;
+            togglePages("classSelectionPage", "studyOptionsPage");
+        }
+
+        function showTournamentPage() {
+            togglePages("selectionPage", "tournamentPage");
+        }
+
+        function goBack(previousPage) {
+            let currentPages = document.querySelectorAll(".container:not(.hidden)");
+            currentPages.forEach(page => page.classList.add("hidden"));
+
+            document.getElementById(previousPage).classList.remove("hidden");
+        }
+
+        function togglePages(hidePage, showPage) {
+            document.getElementById(hidePage).classList.add("hidden");
+            document.getElementById(showPage).classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
